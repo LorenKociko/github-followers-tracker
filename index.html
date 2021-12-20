@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitMatch followers>
+        <link rel="stylesheet" href="./git.css">
+</head>
+
+
+<body>
+    <main>
+        <h1>Whats your GitHub username:</h1>
+        <div id="inputs">
+            <input type="text" id="inputedUsername">
+            <input type="button" id="searchbtn" value="Search" onclick="main()">
+        </div>
+        <section id="grid">
+            <div id="followers" class="box">
+                <ul id="followersList">
+                    <li>
+                        <h2>Followers:</h2>
+                    </li>
+                </ul>
+            </div>
+            <div id="following" class="box">
+                <ul id="followingList">
+                    <li>
+                        <h2>Following:</h2>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    <script>
+        const followersElement = document.getElementById("followersList")
+        const followingElement = document.getElementById("followingList")
+
+        function main() {
+            followersElement.innerHTML = "<li><h2>Followers:</h2></li>"
+            followingElement.innerHTML = "<li><h2>Following:</h2></li>"
+            const username = document.getElementById("inputedUsername").value
+            getFollowers(username)
+        }
+        async function getFollowers(username = "LorenKociko") {
+            let followersList = []
+            let followingList = []
+            let tempFollowersList = []
+            let tempFollowingList = []
+            let morePagesFlag = false
+
+            let followersUrl = `https://api.github.com/users/${username}/followers?per_page=100&page=`
+            let followingUrl = `https://api.github.com/users/${username}/following?per_page=100&page=`
+            let page1 = 0
+            let page2 = 0
+
+            do {
+                morePagesFlag = false
+                page1++
+                let tempFollowersList = []
+                tempFollowersList = await fetchGit(followersUrl, page1)
+                followersList.push(...tempFollowersList)
+                if (tempFollowersList.length === 100) {
+                    morePagesFlag = true
+                }
+            } while (morePagesFlag)
+
+            do {
+                morePagesFlag = false
+                page2++
+                let tempFollowingList = []
+                tempFollowingList = await fetchGit(followingUrl, page2)
+                followingList.push(...tempFollowingList)
+                if (tempFollowingList.length === 100) {
+                    morePagesFlag = true
+                }
+            } while (morePagesFlag)
+            fillList(followersElement, followersList)
+            fillList(followingElement, followingList)
+                // console.log(followersList)
+                // console.log(followingList)
+        }
+
+
+        async function fetchGit(url, page = 1) {
+            return await fetch(url + page).then(response => {
+                return response.json()
+            })
+        }
+
+        function fillList(parent, list) {
+            for (let i = 0; i < list.length; i++) {
+                let liElement = document.createElement("li")
+                let divElement = document.createElement("div")
+                divElement.classList.add("entry")
+                let imgElement = document.createElement("img")
+                imgElement.src = list[i].avatar_url
+                imgElement.style.height = "40px"
+                imgElement.style.width = "40px"
+                let nameElement = document.createElement("p")
+                nameElement.classList.add("name")
+                nameElement.innerText = list[i].login
+                divElement.appendChild(imgElement)
+                divElement.appendChild(nameElement)
+                liElement.appendChild(divElement)
+                parent.appendChild(liElement)
+            }
+        }
+    </script>
+</body>
+
+</html>
