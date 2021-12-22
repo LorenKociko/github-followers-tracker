@@ -16,6 +16,18 @@ h1 {
     margin: 20px 0;
 }
 
+#fold {
+    margin: 40px;
+}
+
+.hidden {
+    font-size: 1.1em;
+    padding: 1em 1.5em;
+    margin: 0.5em;
+    border-radius: 10px;
+    border: none;
+}
+
 main {
     padding: 20px;
 }
