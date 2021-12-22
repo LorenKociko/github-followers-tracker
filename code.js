@@ -101,8 +101,8 @@ function loadLocalStorage(username) {
 
 function showChanges() {
     msg.innerText = `Last Changes`
-    followersElement.innerHTML = `<li><h2>Followers Changes: ${deletedFollowers.length+addedFollowers.length}</h2></li>`
-    followingElement.innerHTML = `<li><h2>Following Changes: ${deletedFollowing.length+addedFolloing.length}</h2></li>`
+    followersElement.innerHTML = `<li><h2>Followers: ${deletedFollowers.length+addedFollowers.length}</h2></li>`
+    followingElement.innerHTML = `<li><h2>Following: ${deletedFollowing.length+addedFolloing.length}</h2></li>`
     fillList(followingElement, deletedFollowing, "deleted")
     fillList(followingElement, addedFolloing, "added")
     fillList(followersElement, deletedFollowers, "deleted")

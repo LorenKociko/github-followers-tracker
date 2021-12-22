@@ -100,7 +100,8 @@ input:focus {
 #grid {
     margin-top: 50px;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 100px;
 }
 
 li {
@@ -112,8 +113,6 @@ img {
     border-radius: 50%;
 }
 
-#followers {}
-
 .name {
     font-size: 1.2em;
     margin-left: 10px;
@@ -122,8 +121,50 @@ img {
     justify-content: center;
 }
 
-#following {}
-
 .entry {
     display: flex;
+}
+
+@media screen and (max-width: 800px) {
+    #grid {
+        gap: 20px;
+        justify-content: center;
+        /* max-width: 50%; */
+        min-width: 50%;
+    }
+    img {
+        width: 10% !important;
+        height: 10% !important;
+    }
+    .name {
+        font-size: 1em;
+    }
+    main {
+        padding: 0;
+    }
+    .box {
+        padding: 20px 0 20px 20px;
+        min-width: 200px;
+    }
+    .added::before {
+        content: none;
+    }
+    .deleted::before {
+        content: none;
+    }
+    .added {
+        color: green;
+    }
+    .deleted {
+        color: red;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    #grid {
+        gap: 5px;
+    }
+    .name {
+        font-size: 0.7em;
+    }
 }
