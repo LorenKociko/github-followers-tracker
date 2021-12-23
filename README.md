@@ -16,4 +16,4 @@ You can also click the "Save" button, for a new tracking to start from now on, a
 
 <hr>
 
-### You can try it yourself [Here.](https://lorenkociko.com/projects/GitHub-Tracker/)
+### You can try it yourself [Here](https://lorenkociko.com/projects/GitHub-Tracker/).
