@@ -69,6 +69,7 @@ async function completeFetch(url) {
         page++
         templist = []
         templist = await fetchGit(url, page)
+        console.log(templist)
         result.push(...templist)
         if (templist.length === 100) {
             morePagesFlag = true
@@ -78,9 +79,17 @@ async function completeFetch(url) {
 }
 
 async function fetchGit(url, page = 1) {
-    return await fetch(url + page).then(response => {
-        return response.json()
-    })
+    let response = await fetch(url + page)
+    if (response.status === 404) {
+        msg.innerText = "This Username doesn't exist."
+        throw new Error("This Username doesn't exist.");
+    }
+    if (response.status === 403) {
+        msg.innerText = "You have exceed the available number of requests for now."
+        throw new Error("You have exceed the available number of requests for now.");
+    }
+    let data = await response.json()
+    return data
 }
 
 function saveLocalStorage(username) {
