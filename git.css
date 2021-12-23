@@ -92,10 +92,11 @@ input:focus {
 
 .deleted::before {
     content: "-";
-    font-size: 1.7em;
+    font-size: 2.25em;
     position: relative;
-    left: -15px;
+    left: -13px;
     color: red;
+    line-height: 1.18em;
 }
 
 #grid {
