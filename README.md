@@ -14,4 +14,6 @@ As you guessed, "+" means new entries, and "-" means removed rentries AKA people
 
 You can also click the "Save" button, for a new tracking to start from now on, and discard all previous changes.
 
+<hr>
+
 ### You can try it yourself [Here.](https://lorenkociko.com/projects/GitHub-Tracker/)
