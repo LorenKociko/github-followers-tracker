@@ -123,6 +123,10 @@ img {
     justify-content: center;
 }
 
+.notfollowing::after {
+    content: "?";
+}
+
 .entry {
     display: flex;
 }
