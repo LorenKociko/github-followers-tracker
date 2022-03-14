@@ -8,8 +8,6 @@ const save = document.getElementById("save")
 
 let followersList = []
 let followingList = []
-    // let notFollowingBack = []
-    // let followingBack = []
 let morePagesFlag = false
 
 let deletedFollowing = []
@@ -41,8 +39,6 @@ async function getFollowers(username) {
     let followingUrl = `https://api.github.com/users/${username}/following?per_page=100&page=`
     followersList = await completeFetch(followersUrl)
     followingList = await completeFetch(followingUrl)
-        // notFollowingBack = followingList.filter(x => !followersList.some(y => x.id === y.id))
-        // followingBack = followersList.filter(x => !followingList.some(y => x.id === y.id))
 
     let previousData = loadLocalStorage(username)
     if (previousData) {
@@ -127,14 +123,16 @@ function showAll() {
     followersElement.innerHTML = `<li><h2>Followers: ${followersList.length}</h2></li>`
     followingElement.innerHTML = `<li><h2>Following: ${followingList.length}</h2></li>`
     fillList(followersElement, followersList)
-    fillList(followingElement, notFollowingBack, "notfollowing")
-    fillList(followingElement, followingBack)
+    fillList(followingElement, followingList)
 }
 
 function fillList(parent, list, className = undefined) {
     for (let i = 0; i < list.length; i++) {
         let liElement = document.createElement("li")
         let divElement = document.createElement("div")
+        let aLink = document.createElement("a")
+        aLink.setAttribute('href', `${list[i].html_url}`);
+        aLink.setAttribute('target', `_blank`);
         divElement.classList.add("entry")
         if (className) {
             divElement.classList.add(`${className}`)
@@ -148,7 +146,8 @@ function fillList(parent, list, className = undefined) {
         nameElement.innerText = list[i].login
         divElement.appendChild(imgElement)
         divElement.appendChild(nameElement)
-        liElement.appendChild(divElement)
+        aLink.appendChild(divElement)
+        liElement.appendChild(aLink)
         parent.appendChild(liElement)
     }
 }
