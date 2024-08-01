@@ -1,5 +1,6 @@
 const followersElement = document.getElementById("followersList")
 const followingElement = document.getElementById("followingList")
+const unfollowersElement = document.getElementById("unfollowersList")
 const msg = document.getElementById("msg")
 const searchbtn = document.getElementById("searchbtn")
 const showall = document.getElementById("showall")
@@ -8,6 +9,7 @@ const save = document.getElementById("save")
 
 let followersList = []
 let followingList = []
+let unfollowersList = []
 let morePagesFlag = false
 
 let deletedFollowing = []
@@ -39,6 +41,7 @@ async function getFollowers(username) {
     let followingUrl = `https://api.github.com/users/${username}/following?per_page=100&page=`
     followersList = await completeFetch(followersUrl)
     followingList = await completeFetch(followingUrl)
+    unfollowersList = followingList.filter((user) => !followersList.some((follower) => follower.id === user.id));
 
     let previousData = loadLocalStorage(username)
     if (previousData) {
@@ -122,8 +125,10 @@ function showAll() {
     msg.innerText = `All Followers / Following`
     followersElement.innerHTML = `<li><h2>Followers: ${followersList.length}</h2></li>`
     followingElement.innerHTML = `<li><h2>Following: ${followingList.length}</h2></li>`
+    unfollowersElement.innerHTML = `<li><h2>Unfollowers: ${unfollowersList.length}</h2></li>`
     fillList(followersElement, followersList)
     fillList(followingElement, followingList)
+    fillList(unfollowersElement, unfollowersList)
 }
 
 function fillList(parent, list, className = undefined) {
